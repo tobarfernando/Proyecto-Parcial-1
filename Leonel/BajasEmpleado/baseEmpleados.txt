@@ -1,0 +1,2 @@
+1		leonel		dominguez		ventas		2000		activo
+2		leonel		dominguez		ventas		2000		activo
