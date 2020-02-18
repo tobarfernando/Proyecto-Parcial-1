@@ -72,53 +72,65 @@ void AltasEmpleados()
 	guardarEmpleado.close();
 };
 void BajasEmpleados() {
-	baseEmpleados.close();
-	baseEmpleados.open("baseEmpleados.txt");
-	archivoTemporal.open("archivoTemporal.txt");
-	if (baseEmpleados.is_open() && archivoTemporal.is_open())
+	baseEmpleados.open("baseEmpleados.txt");//se manda a llamar la funcion para poder leer el archivo
+	archivoTemporal.open("archivoTemporal.txt");//se manda a llamar la funcion para poder modificar el archivo
+	for (int x = 13; x <= 85; x++)//se utiliza un putchar para realizar un marco en linea horizontal
+	{
+		gotoxy(x, 2);
+		putchar('-');
+		gotoxy(x, 11);
+		putchar('-');
+	}
+	if (baseEmpleados.is_open() && archivoTemporal.is_open())//si ambos archivos existen y estan abierto realizar los procesos
 	{
 		baseEmpleados >> datosEmpleados.codigoEmpleado;
-		bool encontrado = false;
-		cout << "Escriba el codigo del empleado a buscar:  ";
-		cin >> datosEmpleados.codigoBusqueda;
-		while (!baseEmpleados.eof())
+		bool encontrado = false;//se declara un booleano para saber que se encontro o no la informacion
+		gotoxy(15, 3);cout << "Escriba el codigo del empleado a buscar:  ";
+		gotoxy(75,3);cin >> datosEmpleados.codigoBusqueda;//se introduce el codigo a buscar en una funcion que se usa para almacenar la informacion de empleados
+		while (!baseEmpleados.eof())//si el archivo no ah terminado que siga leyendo el archivo
 		{
-			baseEmpleados >> datosEmpleados.nombreEmpleado >> datosEmpleados.apellidoEmpleado >> datosEmpleados.puestoEmpleado >> datosEmpleados.sueldoEmpleado >> datosEmpleados.estadoEmpleado;
-			if (datosEmpleados.codigoEmpleado == datosEmpleados.codigoBusqueda) {
-				encontrado = true;
-				cout << "Nombre: " << datosEmpleados.nombreEmpleado << endl;
-				cout << "Apellido: " << datosEmpleados.apellidoEmpleado << endl;
-				cout << "Puesto: " << datosEmpleados.puestoEmpleado << endl;
-				cout << "Sueldo: " << datosEmpleados.sueldoEmpleado << endl;
-				cout << "Estado: " << datosEmpleados.estadoEmpleado << endl;
-				cout << "Ingrese nuevo estado laboral del empleado" << endl;
-				cin >> datosEmpleados.nuevoEstadoLab;
-				cout << "Desea confirmar para darle de baja al empleado con el codigo: " << datosEmpleados.codigoBusqueda << endl;
-				cin >> datosEmpleados.confirmarModificacion;
-				if (datosEmpleados.confirmarModificacion == "si" && "SI")
+			baseEmpleados >> datosEmpleados.nombreEmpleado >> datosEmpleados.apellidoEmpleado >> datosEmpleados.puestoEmpleado >> datosEmpleados.sueldoEmpleado >> datosEmpleados.estadoEmpleado;//se guarda la informacion en forma de variables
+			if (datosEmpleados.codigoEmpleado == datosEmpleados.codigoBusqueda) {//compara el dato introducido con el dato capturado
+				encontrado = true;//si lo encuentra envia un mensaje al booleano que se encontro
+				gotoxy(15, 4);cout << "Nombre:";//se utiliza el gotoxy para poder centrar el texto
+				gotoxy(25, 4);cout << datosEmpleados.nombreEmpleado;
+				gotoxy(15, 5);cout << "Apellido:";
+				gotoxy(25, 5);cout << datosEmpleados.apellidoEmpleado;
+				gotoxy(15, 6);cout << "Puesto:";
+				gotoxy(25, 6);cout << datosEmpleados.puestoEmpleado;
+				gotoxy(15, 7);cout << "Sueldo:";
+				gotoxy(25, 7);cout << datosEmpleados.sueldoEmpleado;
+				gotoxy(15, 8);cout << "Estado:";
+				gotoxy(25, 8);cout << datosEmpleados.estadoEmpleado;
+				gotoxy(15, 9);cout << "Ingrese nuevo estado laboral del empleado";
+				gotoxy(57, 9);cin >> datosEmpleados.nuevoEstadoLab;
+				gotoxy(15, 10);cout << "Desea confirmar para darle de baja al empleado con el codigo: " << datosEmpleados.codigoBusqueda << endl;
+				gotoxy(80, 10);cin >> datosEmpleados.confirmarModificacion;
+				if (datosEmpleados.confirmarModificacion == "si" && "SI")//si la desicion es si, se guarda la modificacion
 				{
 					archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nombreEmpleado << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.nuevoEstadoLab << endl;
 				}
-				if (datosEmpleados.confirmarModificacion == "no" && "NO")
+				if (datosEmpleados.confirmarModificacion == "no" && "NO")//si la decicion es no, no guarda ninguna modificacion
 				{
 					archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nombreEmpleado << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl;
 				}
 			}
-			else
+			else//si no se encuentra el codigo se guarda en un archivo temporal
 			{
 				archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nombreEmpleado << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl;
 			}
 			baseEmpleados >> datosEmpleados.codigoEmpleado;
 		}
-		if (encontrado == false) {
-			cout << "Codigo no encontrado en la base de datos" << endl;
+		if (encontrado == false) {//si no se encuentra el booleano es envia un mensaje de archivo no encontrado
+			system("cls");
+			gotoxy(35, 5);cout << "archivo no encontrado en la base de datos" << endl;
 		}
 		baseEmpleados.close();
-		archivoTemporal.close();
-		remove("baseEmpleados.txt");
-		rename("archivoTemporal.txt", "baseEmpleados.txt");
+		archivoTemporal.close();//cerramos ambos archivos para mayor seguridad
+		remove("baseEmpleados.txt");//eliminamos el archivo txt
+		rename("archivoTemporal.txt", "baseEmpleados.txt");//el archivo temporal lo renombramos y sera ahora el que contenga la base de datos de empleados
 	}
-};
+};//Hecho por Leonel Dominguez
 void ModificaionEmpleados() {
 	do {
 		system("cls");
@@ -498,24 +510,24 @@ void MostrarNomina()
 }
 void login()
 {
-	do
+	do//login hecho por Leonel Dominguez
 	{
-		system("cls");
+		system("cls");//se limpia la pantalla
 		baseUsuarios.open("log.txt", ios::in);
 		gotoxy(45, 10);cout << "CODIGO DE USUARIO: ";
 		gotoxy(45, 11);cout << "CONTRASEÑA: ";
-		gotoxy(66, 10);cin >> datosUsuarios.codigoBusqueda;//pide el nombre de usuario
-		if (baseUsuarios.is_open())
+		gotoxy(66, 10);cin >> datosUsuarios.codigoBusqueda;//pide el codigo de usuario
+		if (baseUsuarios.is_open())//mira si el archivo txt esta abierto
 		{
 			while (!baseUsuarios.eof())
 			{
-				baseUsuarios >> datosUsuarios.codigoUsuario >> datosUsuarios.nombreUsuario >> datosUsuarios.contrasenaUsuario;
-				if (!baseUsuarios.eof())
+				baseUsuarios >> datosUsuarios.codigoUsuario >> datosUsuarios.nombreUsuario >> datosUsuarios.contrasenaUsuario;//se captura los datos en forma de variables
+				if (!baseUsuarios.eof())//si el archivo txt no ah terminado que siga comparando
 				{
-					if (datosUsuarios.codigoUsuario == datosUsuarios.codigoBusqueda)
+					if (datosUsuarios.codigoUsuario == datosUsuarios.codigoBusqueda)//compara si el codigo introducido existe en la base de datos
 					{
 						gotoxy(64, 11);cin >> datosUsuarios.contrasenaBusqueda;//pide ingresar contraseña
-						if (datosUsuarios.contrasenaUsuario == datosUsuarios.contrasenaBusqueda)
+						if (datosUsuarios.contrasenaUsuario == datosUsuarios.contrasenaBusqueda)//compara si la contraseña introducida es correcta en la base de datos
 						{
 							do {
 								system("cls");
@@ -527,7 +539,7 @@ void login()
 								gotoxy(20, 14);cout << "Mostrar.................5" << endl;
 								gotoxy(20, 15);cout << "Salir...................0" << endl;
 								gotoxy(20, 16);cin >> opcion;
-								switch (opcion)
+								switch (opcion)//se hizo el switch para segmentar los procesos del programa
 								{
 								case 1:
 									system("cls");
@@ -536,7 +548,7 @@ void login()
 									break;
 								case 2:
 									system("cls");
-									BajasEmpleados();
+									BajasEmpleados();//se manda a llamar la funcion de bajas de empleados
 									system("pause");
 									break;
 								case 3:
@@ -567,12 +579,12 @@ void login()
 			}
 			baseUsuarios.close();
 		}
-		else
+		else//si el archivo nos e encuentra entonces mostramos un mensaje del error
 		{
 			cout << "El archivo no existe o tiene algun error";
 		}
 
-	} while (datosUsuarios.codigoUsuario != datosUsuarios.codigoBusqueda);
+	} while (datosUsuarios.codigoUsuario != datosUsuarios.codigoBusqueda);//creamos el bucle para que si escribe el usuario o contraseña incorrecto lo siga intentando
 }
 int main()
 {
