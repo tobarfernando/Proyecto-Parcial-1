@@ -134,8 +134,6 @@ void BajasEmpleados() {
 void ModificaionEmpleados() {
 	do {
 		system("cls");
-
-
 		gotoxy(20, 9);cout << "************************************" << endl;
 		gotoxy(20, 10);cout << "* ingrese opcion deseada modificar *" << endl;
 		gotoxy(20, 11);cout << "* nombre.........................1 *" << endl;
@@ -147,24 +145,24 @@ void ModificaionEmpleados() {
 		gotoxy(20, 17);cout << "*                                  *" << endl;
 		gotoxy(20, 18);cout << "************************************" << endl;
 		gotoxy(29, 17);cin >> opModificacion;
-		switch (opModificacion)
+		switch (opModificacion)//abre switch para relizar modificaciones en donde se deseen realizar
 		{
 		case 1:
 			system("cls");
-			baseEmpleados.close();
-			baseEmpleados.open("baseEmpleados.txt");
-			archivoTemporal.open("archivoTemporal.txt");
-			if (baseEmpleados.is_open() && archivoTemporal.is_open())
+			baseEmpleados.close();//cierra el archivo de base de empleados en caso que se encuentre abierto y asi evitar errores
+			baseEmpleados.open("baseEmpleados.txt");//abre el archivo de base de datos
+			archivoTemporal.open("archivoTemporal.txt");//abre el archivo temporal 
+			if (baseEmpleados.is_open() && archivoTemporal.is_open()) //verifica si ya se abrieron los dos archivos anteriores
 			{
-				baseEmpleados >> datosEmpleados.codigoEmpleado;
-				bool encontrado = false;
+				baseEmpleados >> datosEmpleados.codigoEmpleado; //lee la variable de empleados 
+				bool encontrado = false;//declara una variable del tipo bool para poder verificar si se encontro la variable deseada
 				gotoxy(20, 9);cout << "Escriba el codigo del empleado a buscar:  ";
-				cin >> datosEmpleados.codigoBusqueda;
+				cin >> datosEmpleados.codigoBusqueda;//pide codigo para buscarlos
 
 
-				while (!baseEmpleados.eof())
+				while (!baseEmpleados.eof())//lee el documento de principio a fin
 				{
-					baseEmpleados >> datosEmpleados.nombreEmpleado >> datosEmpleados.apellidoEmpleado >> datosEmpleados.puestoEmpleado >> datosEmpleados.sueldoEmpleado >> datosEmpleados.estadoEmpleado;
+					baseEmpleados >> datosEmpleados.nombreEmpleado >> datosEmpleados.apellidoEmpleado >> datosEmpleados.puestoEmpleado >> datosEmpleados.sueldoEmpleado >> datosEmpleados.estadoEmpleado;//de esta manera leera el documento con respecto a las pociciones d elas variables
 					if (datosEmpleados.codigoEmpleado == datosEmpleados.codigoBusqueda) {
 						encontrado = true;
 						cout << "Nombre: " << datosEmpleados.nombreEmpleado << endl;
@@ -172,25 +170,25 @@ void ModificaionEmpleados() {
 						cin >> datosEmpleados.nuevoNombre;
 						cout << "Desea confirmar cambios en el empleado con el codigo: " << datosEmpleados.codigoBusqueda << endl;
 						cin >> datosEmpleados.confirmarModificacion;
-						if (datosEmpleados.confirmarModificacion == "si" && "SI")
+						if (datosEmpleados.confirmarModificacion == "si" && "SI")//esta condicion es la confirmacion o no confirmacion de los cambios en el archivo
 						{
-							archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nuevoNombre << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl;
+							archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nuevoNombre << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl; //efectua los cambios en la variable deseada y deja el resto como estaban
 						}
 					}
 					else
 					{
-						archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nombreEmpleado << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl;
+						archivoTemporal << datosEmpleados.codigoEmpleado << "\t\t" << datosEmpleados.nombreEmpleado << "\t\t" << datosEmpleados.apellidoEmpleado << "\t\t" << datosEmpleados.puestoEmpleado << "\t\t" << datosEmpleados.sueldoEmpleado << "\t\t" << datosEmpleados.estadoEmpleado << endl; //si no se cumple la condicion de confirmacion los datos son vueltos a escribir sin realizar cambios en ellos
 					}
 					baseEmpleados >> datosEmpleados.codigoEmpleado;
 				}
 
-				if (encontrado == false) {
+				if (encontrado == false) { //si la variable tipo boole no cambia a true entonces se cumpliria esta validacion
 					cout << "Codigo no encontrado en la base de datos" << endl;
 				}
-				baseEmpleados.close();
-				archivoTemporal.close();
-				remove("baseEmpleados.txt");
-				rename("archivoTemporal.txt", "baseEmpleados.txt");
+				baseEmpleados.close();//cierra el archivo empleados
+				archivoTemporal.close();//cierra el archivo temporal
+				remove("baseEmpleados.txt");//elimina el archivo de empleados
+				rename("archivoTemporal.txt", "baseEmpleados.txt");//cambia el nombre al archivo temporal por archihvo de empleados para suplantar al que fue eliminado ya con los cambios que se deseaban hacer
 			}
 
 			system("pause");
@@ -346,8 +344,8 @@ void ModificaionEmpleados() {
 			system("pause");
 			break;
 		}
-	} while (opModificacion != 0);
-};
+	} while (opModificacion != 0); //cierrra el do while hasta que la opcion en el menu sea igual a cero, de lo contrario seguira en el ciclo para poder realizar mas modificaciones
+}; //codigo crado por Fernando Daniel Tobar Arevalo
 void Cheques()
 {
 	baseEmpleados.open("baseEmpleados.txt", ios::in);
