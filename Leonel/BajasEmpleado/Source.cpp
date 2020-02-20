@@ -14,10 +14,11 @@ struct usuarios
 usuarios datosUsuarios;
 struct empleados
 {
-	string codigoEmpleado, nombreEmpleado, apellidoEmpleado, puestoEmpleado, estadoEmpleado, nuevoEstadoLab, codigoBusqueda, confirmarModificacion;
-	float sueldoEmpleado;
+	string codigoEmpleado, nombreEmpleado, nuevoNombre, apellidoEmpleado, nuevoApellido, puestoEmpleado, nuevoPuesto, estadoEmpleado, nuevoEstadoLab, codigoBusqueda, confirmarModificacion;
+	float sueldoEmpleado, nuevoSueldo;
 };
 empleados datosEmpleados;
+int opcion;
 void gotoxy(int x, int y)//se manda a llamar la libreria de gotoxy y sirve para el posiconamiento de texto
 {
 	HANDLE hcon;
@@ -26,41 +27,6 @@ void gotoxy(int x, int y)//se manda a llamar la libreria de gotoxy y sirve para 
 	dwPos.X = x;
 	dwPos.Y = y;
 	SetConsoleCursorPosition(hcon, dwPos);
-}
-void login()
-{
-	do
-	{
-		system("cls");
-		baseUsuarios.open("log.txt", ios::in);
-		gotoxy(45, 10);cout << "CODIGO DE USUARIO: " << endl;
-		gotoxy(45, 11);cout << "CONTRASEÑA: " << endl;
-		gotoxy(66, 10);cin >> datosUsuarios.codigoBusqueda;//pide el nombre de usuario
-		if (baseUsuarios.is_open())
-		{
-			while (!baseUsuarios.eof())
-			{
-				baseUsuarios >> datosUsuarios.codigoUsuario >> datosUsuarios.nombreUsuario >> datosUsuarios.contrasenaUsuario;
-				if (!baseUsuarios.eof())
-				{
-					if (datosUsuarios.codigoUsuario == datosUsuarios.codigoBusqueda)
-					{
-						gotoxy(64, 11);cin >> datosUsuarios.contrasenaBusqueda;//pide ingresar contraseña
-						if (datosUsuarios.contrasenaUsuario == datosUsuarios.contrasenaBusqueda)
-						{
-							cout << "hola";
-						}
-					}
-				}
-			}
-			baseUsuarios.close();
-		}
-		else
-		{
-			cout << "El archivo no existe o tiene algun error";
-		}
-
-	} while (datosUsuarios.codigoBusqueda != datosUsuarios.codigoUsuario);
 }
 void AltasEmpleados()
 {
@@ -145,10 +111,79 @@ void BajasEmpleados() {
 		rename("archivoTemporal.txt", "baseEmpleados.txt");
 	}
 };
-void menu() {
-	AltasEmpleados();
-	BajasEmpleados();
+
+void login()
+{
+	do
+	{
+		system("cls");
+		baseUsuarios.open("log.txt", ios::in);
+		gotoxy(45, 10); cout << "CODIGO DE USUARIO: " << endl;
+		gotoxy(45, 11); cout << "CONTRASEÑA: " << endl;
+		gotoxy(66, 10); cin >> datosUsuarios.codigoBusqueda;//pide el nombre de usuario
+		if (baseUsuarios.is_open())
+		{
+			while (!baseUsuarios.eof())
+			{
+				baseUsuarios >> datosUsuarios.codigoUsuario >> datosUsuarios.nombreUsuario >> datosUsuarios.contrasenaUsuario;
+				if (!baseUsuarios.eof())
+				{
+					if (datosUsuarios.codigoUsuario == datosUsuarios.codigoBusqueda)
+					{
+						gotoxy(64, 11); cin >> datosUsuarios.contrasenaBusqueda;//pide ingresar contraseña
+						if (datosUsuarios.contrasenaUsuario == datosUsuarios.contrasenaBusqueda)
+						{
+							do {
+								system("cls");
+								cout << "ingrese la opcion deseada" << endl;
+								cout << "altas...................1" << endl;
+								cout << "bajas...................2" << endl;
+								cout << "modificacion............3" << endl;
+								cout << "salir...................0" << endl;
+								cin >> opcion;
+								switch (opcion)
+								{
+								case 1:
+									system("cls");
+									AltasEmpleados();
+									system("pause");
+									break;
+								case 2:
+									system("cls");
+									BajasEmpleados();
+									system("pause");
+									break;
+								case 3:
+									system("cls");
+									
+									system("pause");
+									break;
+								case 0:
+									system("cls");
+									cout << "usted esta saliendo" << endl;
+									system("pause");
+									break;
+								default:
+									system("cls");
+									cout << "opcion no disponible" << endl;
+									system("pause");
+									break;
+								}
+							} while (opcion != 0);
+						}
+					}
+				}
+			}
+			baseUsuarios.close();
+		}
+		else
+		{
+			cout << "El archivo no existe o tiene algun error";
+		}
+
+	} while (datosUsuarios.codigoBusqueda != datosUsuarios.codigoUsuario);
 }
+
 int main()
 {
 	login();
