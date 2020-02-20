@@ -1,6 +1,2 @@
-2		leonel		dominguez		jefe		1000		activo
-3		leonel		dominguez		jefe		1000		activo
-4		leonel		dominguez		jefe		100		activo
-5		leonel		dominguez		jefe		1000		activo
-6		leonel		dominguez		jefe		100		activo
-1		diego		vazques		jefe		12000		activo
+1		jeff		dav		ge		5000		activo
+2		leonel		dominguez		gerente		5000		inactivo
